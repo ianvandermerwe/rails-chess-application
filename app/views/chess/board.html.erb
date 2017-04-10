@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TestRailsApp</title>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+<style>
+  .tile{
+    width:45px;
+    height:45px;
+    float:left;
+  }
+
+  .tile.white-piece{
+    background-position-y: 0;
+  }
+  .tile.black-piece{
+    background-position-y: -45px;
+  }
+
+  .tile.black{
+    background-color:#333;
+  }
+
+  .row{
+    float:left;
+    clear:both;
+  }
+
+  .piece{
+    background: url(<%= asset_path('chess_pieces_sprite.png') %>);
+    background-repeat: no-repeat;
+  }
+  .castle{
+    background-position-x: -180px;
+  }
+  .horse{
+    background-position-x: -135px;
+  }
+  .bishop{
+    background-position-x: -89px;
+  }
+  .queen{
+    background-position-x: -45px;
+  }
+  .king{
+    background-position-x: 0;
+  }
+</style>
+<h1>...</h1>
+<%
+  even = 0
+  row_iteration = 1
+  rows = @chess_layout["rows"].to_i
+
+  column_iteration = 1
+  columns = @chess_layout["columns"].to_i
+
+  while row_iteration <= rows do
+    %>
+        <div class="row">
+    <%
+
+    while column_iteration <= columns
+      if even.even?
+        %>
+          <div class="tile white <%= place_piece(row_iteration, column_iteration) %>"></div>
+        <%
+      else
+        %>
+          <div class="tile black <%= place_piece(row_iteration, column_iteration) %>"></div>
+        <%
+      end
+
+      column_iteration += 1
+      even += 1
+    end
+
+    if even == 9
+      even = 0
+    else
+      even = 1
+    end
+    column_iteration = 1
+    %>
+      </div>
+    <%
+    row_iteration += 1
+  end
+%>
+
+</body>
+</html>

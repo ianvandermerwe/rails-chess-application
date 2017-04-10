@@ -1,0 +1,3 @@
+class ChessController < ApplicationController
+
+end
